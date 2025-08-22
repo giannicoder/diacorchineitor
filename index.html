@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Día 29 de Diciembre</title>
+  <title>Corgiday 💖</title>
   <style>
     body {
       font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -20,13 +20,17 @@
       border-radius: 20px;
       box-shadow: 0 6px 20px rgba(0,0,0,0.15);
       text-align: center;
-      max-width: 350px;
+      max-width: 400px;
       width: 100%;
     }
     h1 {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       margin-bottom: 20px;
       color: #d6336c;
+    }
+    label {
+      font-size: 1.1rem;
+      color: #444;
     }
     input {
       padding: 10px;
@@ -35,7 +39,7 @@
       border-radius: 10px;
       outline: none;
       text-align: center;
-      width: 120px;
+      width: 140px;
       margin-top: 10px;
     }
     button {
@@ -58,33 +62,79 @@
       color: #d6336c;
       font-weight: bold;
     }
+    #countdown {
+      margin-top: 15px;
+      font-size: 1.1rem;
+      color: #e75480;
+    }
+    #mensaje {
+      margin-top: 25px;
+      font-size: 1.3rem;
+      color: #ff4d88;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <div class="card">
-    <h1>💖 Día del Corgi 💖</h1>
-    <p>Elegí un año para ver qué dia cae <b>EL MEJOR DÍA DE DICIEMBRE</b></p>
+    <h1>💖 Corgiday 💖</h1>
+    <label for="year">Corgito, elija el año de su día favorito:</label>
+    <br>
     <input type="number" id="year" placeholder="Ej: 2025">
     <br>
-    <button onclick="calcularDia()">Ver día</button>
+    <button onclick="calcularDia()">Ver Corgiday</button>
     <p id="resultado"></p>
+    <p id="countdown"></p>
+    <p id="mensaje"></p>
   </div>
 
   <script>
+    let countdownInterval;
+
     function calcularDia() {
       const yearInput = document.getElementById('year').value;
       const year = parseInt(yearInput);
 
       if (isNaN(year)) {
-        document.getElementById('resultado').textContent = "TENÉS QUE PONER UN AÑO CORCHITO, MUY MAL.";
+        document.getElementById('resultado').textContent = "Por favor, ingresa un año válido.";
         return;
       }
 
-      const fecha = new Date(year, 11, 29); // diciembre = mes 11
+      const fecha = new Date(year, 11, 29); // diciembre = 11
       const diasSemana = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"];
       const dia = diasSemana[fecha.getDay()];
 
-      document.getElementById('resultado').textContent = `EL DÍA CORCHUNGO DE ${year} cae en ${dia} 💕`;
+      document.getElementById('resultado').textContent =
+        `✨ EL CORGIDAY DEL AÑO ${year} CAE EN ${dia.toUpperCase()} ✨`;
+
+      iniciarCuentaRegresiva(fecha);
+
+      document.getElementById('mensaje').textContent =
+        "💝 A MOR CI TO FE LIZ CUM .... 💝";
+    }
+
+    function iniciarCuentaRegresiva(fecha) {
+      clearInterval(countdownInterval);
+
+      countdownInterval = setInterval(() => {
+        const ahora = new Date();
+        const diferencia = fecha - ahora;
+
+        if (diferencia <= 0) {
+          document.getElementById('countdown').textContent =
+            "🎉 ¡Ya llegó el CORGIDAY! 🎉";
+          clearInterval(countdownInterval);
+          return;
+        }
+
+        const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+        const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+        document.getElementById('countdown').textContent =
+          `⏳ La cuenta regresiva para el CORGIDAY: ${dias}d ${horas}h ${minutos}m ${segundos}s`;
+      }, 1000);
     }
   </script>
 </body>
